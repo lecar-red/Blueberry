@@ -77,7 +77,7 @@
 				if(pager){
 					$('a', pager).click(function() {
 						//stop the timer
-						clearTimeout(obj.play);
+						clearTimer();
 						//set the slide index based on pager index
 						next = $(this).parent().index();
 						//rotate the slides
@@ -110,13 +110,26 @@
 					current = next;
 					next = current >= slides.length-1 ? 0 : current+1;
 				};
+
 				//create a timer to control slide rotation interval
 				var rotateTimer = function(){
+					// clean up everyone do their share to avoid a
+					// crap load of timeouts floating around
+					clearTimer();
+
 					obj.play = setTimeout(function(){
 						//trigger slide rotate function at end of timer
 						rotate();
 					}, o.interval);
 				};
+
+				var clearTimer = function() {
+					if ( obj.play ) {
+						clearTimeout(obj.play);
+						obj.play = null;
+					}
+				}
+
 				//start the timer for the first time
 				rotateTimer();
 
@@ -125,7 +138,7 @@
 				if(o.hoverpause){
 					slides.hover(function(){
 						//stop the timer in mousein
-						clearTimeout(obj.play);
+						clearTimer();
 					}, function(){
 						//start the timer on mouseout
 						rotateTimer();

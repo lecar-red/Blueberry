@@ -130,20 +130,30 @@
 					}
 				}
 
+                var setHoverPause = function() {
+				    if(o.hoverpause){
+                        console.log('setting up hover pause');
+					    slides.hover(function(){
+						    //stop the timer in mousein
+						    clearTimer();
+					    }, function(){
+						    //start the timer on mouseout
+						    rotateTimer();
+					    });
+				    }
+                }
+                
+                var clearHover = function() {
+                    if (o.hoverpause) {
+                        console.log('removing hoverpause');
+                        slides.unbind('mouseenter mouseleave');
+                    }
+                } 
+
 				//start the timer for the first time
 				rotateTimer();
 
-				//pause the slider on hover
-				//disabled by default due to bug
-				if(o.hoverpause){
-					slides.hover(function(){
-						//stop the timer in mousein
-						clearTimer();
-					}, function(){
-						//start the timer on mouseout
-						rotateTimer();
-					});
-				}
+                setHoverPause();
 
 				//calculate and set height based on image width/height ratio and specified line height
 				var setsize = function(){
@@ -188,6 +198,19 @@
 					});
 				}
 
+
+                // add stop and start events
+                $(this).on('blueberry.stop', function(e) { 
+                    console.log('stop the fecking blueberry');
+                    clearTimer();
+                    clearHover();
+                });
+
+                $(this).on('blueberry.start', function(e) {
+                    console.log('start the blueberry');
+                    rotateTimer();
+                    setHoverPause();
+                });
 
 			});
 		}

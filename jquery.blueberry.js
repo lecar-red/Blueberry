@@ -132,7 +132,6 @@
 
                 var setHoverPause = function() {
 				    if(o.hoverpause){
-                        console.log('setting up hover pause');
 					    slides.hover(function(){
 						    //stop the timer in mousein
 						    clearTimer();
@@ -145,7 +144,6 @@
                 
                 var clearHover = function() {
                     if (o.hoverpause) {
-                        console.log('removing hoverpause');
                         slides.unbind('mouseenter mouseleave');
                     }
                 } 
@@ -201,13 +199,11 @@
 
                 // add stop and start events
                 $(this).on('blueberry.stop', function(e) { 
-                    console.log('stop the fecking blueberry');
                     clearTimer();
                     clearHover();
                 });
 
                 $(this).on('blueberry.start', function(e) {
-                    console.log('start the blueberry');
                     rotateTimer();
                     setHoverPause();
                 });

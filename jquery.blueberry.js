@@ -167,32 +167,24 @@
 					setsize();
 				});
 				
-				
-
 				//Add keyboard navigation
-
 				if(o.keynav){
 					$(document).keyup(function(e){
-
 						switch (e.which) {
-
 							case 39: case 32: //right arrow & space
-
-								clearTimeout(obj.play);
-
+                                clearTimer();
 								rotate();
-
 								break;
-
 
 							case 37: // left arrow
-								clearTimeout(obj.play);
-								next = current - 1;
+                                clearTimer();
+                                // feels like rotate should only be in charge of current/next
+                                // and should update it to take direction parameter but
+                                // this has least amount of impact
+								next = current - 1 < 0 ? slides.length -1 : current - 1;
 								rotate();
-
 								break;
 						}
-
 					});
 				}
 
